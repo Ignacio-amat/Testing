@@ -1,80 +1,51 @@
-# VVWSchelde dashboard
+# Testing
 
-## INFINITY BOAT
- ### Team members
-    - [Simon Potocnák](https://github.com/wpsimon09)
-    - [Hao Chen](https://github.com/Hao0066)
-    - [Matthias de Ruijter](https://github.com/MellowRainn)
-    - [Ignacio Amat Agüero](https://github.com/Ignacio-amat)
-    - [Miltion Fon](https://github.com/MiltonNji)
-    - [Vladislav Pavlov](https://github.com/vladpavlovhz)
+## First User story
+1. As a communication manager, I want to be able to see what people think about the marina throughout the years, so that I know what to improve for the future.
+- Happy Path: **Given** that I am on the home page, **when** I click on the individual "Category" button, **then** I am taken to the category page.
+- Unhappy Path: **Given** that I am on the home page, **when** I click on the individual "Category" button, **then** I am not taken to the category and I stay in the main dashboard.
 
-### Description
+System Test: **Happy:** When the communications manager presses on the category button, he is taken to the category page.
+System Test: **Unhappy:** When the communications manager presses on the category button, he is not taken to the category page.
+Unit Test: When the users tries to access the category page, the category page is displayed.
 
-This project is a dashboard for the VVWSchelde survey page. It is build with the [Laravel](https://laravel.com/) framework. 
-The Dashboard project is a web application that provides an interactive dashboard interface for managing and monitoring various aspects of your system or application.
-We also create a survey page for the VVWSchelde. 
+- **V-model**: In the context of the V-Model, the acceptance test ensures that the communications manager is able to access the categories page by clicking on the "Show Categories" button, while the system tests validate both the happy and unhappy paths, checking if the manager is correctly redirected or remains on the main dashboard. Additionally, the unit test verifies that the categories page is displayed when the user attempts to access it.
 
-#### Features
+## Design:
+There is a side menu that contains all of the categories. When the user clicks on the category, he is taken to the category page. The category page contains all of the questions that are related to the category. The user can then click on the question and see the answers to the question. The user can also click on the back button and go back to the main dashboard.
 
-    Dashboard Overview: Get an overview of key metrics and important information at a glance.
-    Data Visualization: Visualize data using charts, graphs, and other interactive visual elements.
-    Data Filtering and Sorting: Filter and sort data based on various criteria for better analysis.
-    Add or remove categories and group questions for the survey.
-    Survey: Conduct surveys and collect user feedback using native CSS.
-    Responsive Design: The dashboard is designed to be responsive and accessible on different devices and screen sizes.
-    An api for the documentation visit: https://github.com/HZ-2223/fpr-team08/wiki/API
+## Implementation:
+- The first test that I wrote was a feature test to see if when I pressed on the category, then I would be able to see the category page. I wrote the test in tests/Feature and called it CommunicationManagerTest.php.
+- For the unhappy path I used the same file and just changed the test to see if I would not be taken to the category page, of a non-existent category.
 
-#### Technologies Used
-    Backend: Laravel (version 10.13.5)
-    Server: PHP (version 8.2.0)
-    Frontend: HTML, CSS, JavaScript (Native)
-    Database: MySQL (version  mysql8)
+## Testing
 
-#### Installation/go(http://vvwschelde-dashboard.nl)
-    Clone the repository: git clone https://github.com/HZ-2223/fpr-team08
-    Navigate to the project directory.
-    Install dependencies: composer install (for Laravel)
-    Create a copy of the .env.example file and rename it to .env
-    Generate an application key: php artisan key:generate
-    Configure the database settings in the .env file
-    Run database migrations: php artisan migrate
-    Seed the database: php artisan db:seed
-    Start the development server: php artisan serve
-    Access the dashboard in your browser: http://localhost:8000 (or the specified URL)
+![img_1.png](img_1.png)
 
-#### Usage
-    Visit the login page and log in with your credentials.
-    Explore the different sections and features of the dashboard.
-    Customize the dashboard layout and widgets according to your preferences.
-    Conduct surveys and collect user feedback using the native CSS feature.
-    Manage user accounts, roles, and permissions as required.
-    Analyze and visualize data using the provided tools and widgets.
-
-### Acknowledgements
-We would like to acknowledge the valuable contributions of our study coach and assistant who played a  role in the success of our project:
-1. [Frans Blauw](https://github.com/FransBlauw)
-2. [Thijs de Rechter](https://github.com/ThijsDeR)
-
-### Lost team members - Infinity boat.
-
-We would like to extend an honorary mention to the members of the Infinity Boat who did not make it to the final stretch of our voyage:
-
-1. Laurens Agteresch
-2. Aleks Byulyukov 
-
->**GN** 2023 - 2023
+## Conclusion
+- The test passed for the unhappy path. This is because the category page does not exist in the case of unhappy path.
+- The test also passed for the happy path as it found the category page and was able to display it.
 
 
-Contributions to the Dashboard project are welcome and encouraged! 
-If you find any bugs or have suggestions for improvement, please create an issue or submit a pull request.
-License. Also remember to follow the style guide and naming conventions documented [here](https://github.com/HZ-2223/fpr-team08/wiki/Code-styling)
+## Second User story
+2. As a communications manager, I want to be able to see all the categories in which the marina is divided into, so that I can see what people think about the marina in each category.
+- Happy Path: **Given** that I am on the home page, **when** I click on the "Show Categories" button, **then** I am taken to the page with the full list of categories.
+- Unhappy Path: **Given** that I am on the home page, **when** I click on the "Show Categories" button, **then** I am not taken to the page with the full list of categories and I stay in the main dashboard.
 
-The Dashboard project is open-source software licensed under the MIT license.
-Acknowledgements
+System Test: **Happy:** When the communications manager presses on the show categories button, he is taken to the categories page.
+System Test: **Unhappy:** When the communications manager presses on the show categories button, he is not taken to the categories page.
+Unit Test: When the users tries to access the categories page, the categories page is displayed.
 
-    Laravel - A powerful PHP framework for web development.
-    MySQL - An open-source relational database management system.
+- **V-model**: In the context of the V-Model, the acceptance test ensures that the communications manager is able to access the categories page by clicking on the "Show Categories" button, while the system tests validate both the happy and unhappy paths, checking if the manager is correctly redirected or remains on the main dashboard. Additionally, the unit test verifies that the categories page is displayed when the user attempts to access it.
 
+## Design:
+- On the side menu, there is a button that takes you to the list of categories. When the user clicks on the button, he is taken to the categories page. The categories page contains all of the categories that the marina is divided into. The user can then click on the category and see the questions that are related to the category. The user can also click on the back button and go back to the main dashboard.
 
+## Implementation:
+- The first test that I wrote was a feature test to see if when I pressed on the 'Show Categories' button, then I would be able to see the categories page. I wrote the test in tests/Feature and called it CategoriesDisplayTest.php.
 
+## Testing
+![img.png](img.png)
+
+## Conclusion
+- Both Tests passed, as the categories page exists and the user is able to see it. 
