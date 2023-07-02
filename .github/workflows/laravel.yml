@@ -25,18 +25,15 @@ jobs:
           mkdir -p storage/logs
           chmod -R 777 storage
           chmod -R 777 bootstrap/cache
+      - name: Prepare SQLite database
+        run: |
+          touch database/database.sqlite
+          cp .env.example .env
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=${{ github.workspace }}\/database\/database.sqlite/' .env
       - name: Generate key
-        env:
-            DB_CONNECTION: sqlite
-            DB_DATABASE: ":memory:"
         run: php artisan key:generate --no-interaction
       - name: Run database migrations
-        env:
-            DB_CONNECTION: sqlite
-            DB_DATABASE: ":memory:"
         run: php artisan migrate --no-interaction
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
-        env:
-            DB_CONNECTION: sqlite
-            DB_DATABASE: ":memory:"
+      - name: Run (Unit and Feature) Tests
         run: vendor/bin/phpunit
