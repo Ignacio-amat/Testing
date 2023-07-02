@@ -28,7 +28,4 @@ jobs:
       - name: Generate key
         run: php artisan key:generate
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: ${{ github.workspace }}/database/database.sqlite
         run: vendor/bin/phpunit
