@@ -19,15 +19,14 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
-      - - name: Set up SQLite Database
-          run: |
-            cp .env.example .env
-            sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
-            php artisan key:generate --no-interaction
-            php artisan config:cache
-
-            touch database/database.sqlite
-            php artisan migrate --no-interaction --force
+      - name: Set up SQLite Database
+        run: |
+          cp .env.example .env
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
+          php artisan key:generate --no-interaction
+          php artisan config:cache
+          touch database/database.sqlite
+          php artisan migrate --no-interaction --force
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
