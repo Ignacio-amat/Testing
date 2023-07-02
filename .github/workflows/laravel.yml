@@ -21,6 +21,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
       - name: Set up SQLite Database
         run: |
+          mkdir -p database
           touch database/database.sqlite
           cp .env.example .env
           sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
