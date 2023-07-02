@@ -31,4 +31,7 @@ jobs:
             DB_DATABASE: ":memory:"
         run: php artisan key:generate --no-interaction
       - name: Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+            DB_CONNECTION: sqlite
+            DB_DATABASE: ":memory:"
         run: vendor/bin/phpunit
