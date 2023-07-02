@@ -1,49 +1,46 @@
-name: Tests
+name: Tests (PHP)
 
-on:
-  push:
-    branches:
-      - main
-      - '*.x'
-  pull_request:
-  schedule:
-    - cron: '0 0 * * *'
-
-permissions:
-  contents: read
+on: [push]
 
 jobs:
   tests:
+    name: Run tests
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: true
-      matrix:
-        php: [8.1, 8.2]
-
-    name: PHP ${{ matrix.php }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v1
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
         with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
-          coverage: none
-      - name: Copy environment file
-        run: cp .env.example .env
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
 
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+      - name: Run composer install
+        run: composer install -n --prefer-dist
+        env:
+          APP_ENV: testing
 
-      - name: Copy environment file
-        run: cp .env.example .env
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+      - name: Cache yarn dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: yarn-${{ hashFiles('yarn.lock') }}
 
-      - name: Generate app key
-        run: php artisan key:generate
+      - name: Run yarn
+        run: yarn && yarn dev
 
-      - name: Execute tests
-        run: vendor/bin/phpunit
+      - name: Run tests
+        run: ./vendor/bin/phpunit
+        env:
+          APP_ENV: testing
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        if: failure()
+        with:
+          name: Logs
+          path: ./storage/logs
