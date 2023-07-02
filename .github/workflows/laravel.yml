@@ -25,6 +25,7 @@ jobs:
           sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
           php artisan key:generate --no-interaction
           php artisan config:cache
+          mkdir -p database
           touch database/database.sqlite
           php artisan migrate --no-interaction --force
 
