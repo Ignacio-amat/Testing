@@ -20,7 +20,7 @@ jobs:
       - name: Directory Permissions
         run: |
           chmod -R 755 storage bootstrap/cache
-          chmod -R 644 database/database.sqlite
+          chmod -R 644 database/laravel.sqlite
           php artisan key:generate --no-interaction
           php artisan config:cache
           mkdir -p database
