@@ -6,19 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-services:
-  # mysql-service Label used to access the service container
-  mysql:
-    # Docker Hub image (also with version)
-    image: mysql:latest
-    env:
-      ## Accessing to Github secrets, where you can store your configuration
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-    ## map the "external" 3306 port with the "internal" 3306
-    ports:
-      - 3306:3306
-
 jobs:
   laravel-tests:
 
@@ -39,8 +26,6 @@ jobs:
         run: |
           mkdir -p database
           touch database/database.sqlite
-      - name: Generate key
-        run: php artisan key:generate
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DB_CONNECTION: sqlite
