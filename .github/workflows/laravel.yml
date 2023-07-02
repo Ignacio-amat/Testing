@@ -30,6 +30,11 @@ jobs:
             DB_CONNECTION: sqlite
             DB_DATABASE: ":memory:"
         run: php artisan key:generate --no-interaction
+      - name: Run database migrations
+        env:
+            DB_CONNECTION: sqlite
+            DB_DATABASE: ":memory:"
+        run: php artisan migrate --no-interaction -vvv
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
             DB_CONNECTION: sqlite
