@@ -26,17 +26,8 @@ jobs:
           chmod -R 777 storage
           chmod -R 777 bootstrap/cache
       - name: Generate key
-        env:
-            DB_CONNECTION: mysql
-            DB_DATABASE: ":memory:"
-        run: php artisan key:generate --no-interaction
-      - name: Run database migrations
-        env:
-            DB_CONNECTION: mysql
-            DB_DATABASE: ":memory:"
-        run: php artisan migrate --no-interaction -vvv
+        run: php artisan key:generate --show
+      - name: Set Laravel APP_KEY
+        run: echo "APP_KEY=${{ steps.generate-key.outputs.key }}" >> $GITHUB_ENV
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        env:
-            DB_CONNECTION: mysql
-            DB_DATABASE: ":memory:"
         run: vendor/bin/phpunit
