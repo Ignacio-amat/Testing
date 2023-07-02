@@ -18,11 +18,14 @@ jobs:
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Directory Permissions
-        run:
+        run: |
+          chmod -R 755 storage bootstrap/cache
+          chmod -R 644 database/database.sqlite
           php artisan key:generate --no-interaction
           php artisan config:cache
           mkdir -p database
           touch database/database.sqlite
+          chmod -R 775 database
           php artisan migrate --no-interaction --force
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
