@@ -8,36 +8,27 @@ on:
 
 jobs:
   laravel-tests:
+
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
       - name: Directory Permissions
         run: |
           mkdir -p bootstrap/cache
           mkdir -p storage/app/public
           mkdir -p storage/framework/{cache,sessions,testing,views}
           mkdir -p storage/logs
-          chmod -R 777 storage bootstrap/cache
-
-      - name: Clear Cache
-        run: php artisan cache:clear
-
-      - name: Clear Config Cache
-        run: php artisan config:clear
-
+          chmod -R 777 storage
+          chmod -R 777 bootstrap/cache
       - name: Generate key
-        run: php artisan key:generate
-
-      - name: Set up SQLite Database
-        run: |
-          mkdir -p database
-          touch database/database.sqlite
-          php artisan migrate --no-interaction --force
-
+        env:
+            DB_CONNECTION: sqlite
+            DB_DATABASE: ":memory:"
+        run: php artisan key:generate --no-interaction
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
